@@ -47,10 +47,16 @@ In the file settings.py we add ::
        ...
        {
            'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
+           'OPTIONS': {
+               'lookup_range': 3 
+           }
        },
        ...
    ]
-
+   
+   # 'lookup_range' sets how many previously used passwords to consider. 
+   # defaults to 3 if not set.
+   # It's a good practice to delete the password history.
    # If you want, you can change the default hasher for the password history.
    # DPV_DEFAULT_HISTORY_HASHER = 'django_password_validators.password_history.hashers.HistoryHasher'
 

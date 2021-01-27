@@ -12,10 +12,13 @@ from django_password_validators.password_history.models import (
 
 class UniquePasswordsValidator(object):
     """
-    Validate whether the password was once used by the user.
-
+    Validate whether the password was once used by the user
+    in a determined range.
     The password is only checked for an existing user.
     """
+
+    def __init__(self, lookup_range=3):
+        self.lookup_range = lookup_range if lookup_range >= 0 else float('inf') 
 
     def _user_ok(self, user):
         if not user:
@@ -45,15 +48,25 @@ class UniquePasswordsValidator(object):
 
         for user_config in UserPasswordHistoryConfig.objects.filter(user=user):
             password_hash = user_config.make_password_hash(password)
+            lookup_range = min(self.lookup_range, 
+                PasswordHistory.objects.filter(user_config=user_config).count())
             try:
-                PasswordHistory.objects.get(
-                    user_config=user_config,
-                    password=password_hash
-                )
-                raise ValidationError(
-                    _("You can not use a password that is already used in this application."),
-                    code='password_used'
-                )
+                if lookup_range == 0:
+                    raise PasswordHistory.DoesNotExist
+                else:
+                    password_history = PasswordHistory.objects.filter(
+                        user_config=user_config)[:lookup_range - 1] 
+                    
+                    repeated_password =  PasswordHistory.objects.get(
+                        user_config=user_config,
+                        password=password_hash
+                    )
+
+                    if repeated_password in password_history:
+                        raise ValidationError(
+                            _("You cannot use a password that was recently used in this application."),
+                            code='password_used'
+                        )
             except PasswordHistory.DoesNotExist:
                 pass
 
@@ -74,7 +87,8 @@ class UniquePasswordsValidator(object):
 
         password_hash = user_config.make_password_hash(password)
 
-        # We are looking hash password in the database
+        # We are looking for a hashed password
+        # in the last "lookup_range" entries.
         try:
             PasswordHistory.objects.get(
                 user_config=user_config,
