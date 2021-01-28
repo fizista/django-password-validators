@@ -222,6 +222,7 @@ class UniquePasswordsValidatorTestCase(PasswordsTestCase):
         self.assert_password_validation_False(user_number=1, password_number=2)
 
         considered_passwords = copy(list(PasswordHistory.objects.all()))
+        considered_passwords.reverse()
 
         self.assertEqual(
             len(considered_passwords),
@@ -248,3 +249,30 @@ class UniquePasswordsValidatorTestCase(PasswordsTestCase):
         self.assert_password_validation_False(user_number=1, password_number=1)
         self.assert_password_validation_False(user_number=1, password_number=2)
         self.assert_password_validation_True(user_number=1, password_number=5)
+
+    @override_settings(AUTH_PASSWORD_VALIDATORS=[{
+        'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
+        'OPTIONS': {
+            'lookup_range': 3
+        }
+    }])
+    def test_delete_history_many_entries(self):
+        # Ensures that if lookup_range works well with many password
+        # entries
+        self.create_user(1)
+        self.user_change_password(user_number=1, password_number=1)
+        self.user_change_password(user_number=1, password_number=2)
+        self.user_change_password(user_number=1, password_number=3)
+        self.user_change_password(user_number=1, password_number=4)
+        self.user_change_password(user_number=1, password_number=5)
+        self.user_change_password(user_number=1, password_number=6)
+        self.user_change_password(user_number=1, password_number=7)
+        self.user_change_password(user_number=1, password_number=8)
+        self.assert_password_validation_True(user_number=1, password_number=1)
+        self.assert_password_validation_True(user_number=1, password_number=2)
+        self.assert_password_validation_True(user_number=1, password_number=3)
+        self.assert_password_validation_True(user_number=1, password_number=4)
+        self.assert_password_validation_True(user_number=1, password_number=5)
+        self.assert_password_validation_False(user_number=1, password_number=6)
+        self.assert_password_validation_False(user_number=1, password_number=7)
+        self.assert_password_validation_False(user_number=1, password_number=8)

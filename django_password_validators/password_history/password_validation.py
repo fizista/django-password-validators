@@ -54,7 +54,7 @@ class UniquePasswordsValidator(object):
                     raise PasswordHistory.DoesNotExist
 
                 current_user_passwords = PasswordHistory.objects.filter(
-                    user_config=user_config).order_by('-date')
+                    user_config=user_config).order_by('date')
 
                 if self.lookup_range >= len(current_user_passwords):
                     PasswordHistory.objects.get(
@@ -63,12 +63,13 @@ class UniquePasswordsValidator(object):
                     )
                 else:
                     # At this point, there are passwords we have to delete
-                    for entry in current_user_passwords[self.lookup_range:]:
+                    for entry in current_user_passwords[:len(
+                            current_user_passwords) - self.lookup_range]:
                         entry.delete()
 
-                    if any(entry.user_config == user_config and
-                           entry.password == password
-                           for entry in current_user_passwords[:self.lookup_range]):
+                    if any([entry.user_config == user_config and
+                            entry.password == password
+                            for entry in current_user_passwords[len(current_user_passwords) - self.lookup_range:]]):
                         raise ValidationError(
                             _("You cannot use a password that was recently used in this application."),
                             code='password_used')
