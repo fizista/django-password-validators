@@ -18,7 +18,15 @@ class UniquePasswordsValidator(object):
     """
 
     def __init__(self, lookup_range=float('inf')):
-        self.lookup_range = lookup_range if lookup_range >= 0 else float('inf')
+        try:
+            self.lookup_range = lookup_range if lookup_range >= 0 else float(
+                'inf')
+        except BaseException:
+            raise TypeError(
+                'UniquePasswordsValidator Error: lookup_range is not a positive integer')
+        self.validation_error = ValidationError(
+            _("You cannot use a password that was recently used in this application."),
+            code='password_used')
 
     def _user_ok(self, user):
         if not user:
@@ -61,6 +69,8 @@ class UniquePasswordsValidator(object):
                         user_config=user_config,
                         password=password_hash
                     )
+                    raise self.validation_error
+
                 else:
                     # At this point, there are passwords we have to delete
                     for entry in current_user_passwords[:len(
@@ -70,9 +80,7 @@ class UniquePasswordsValidator(object):
                     if any([entry.user_config == user_config and
                             entry.password == password
                             for entry in current_user_passwords[len(current_user_passwords) - self.lookup_range:]]):
-                        raise ValidationError(
-                            _("You cannot use a password that was recently used in this application."),
-                            code='password_used')
+                        raise self.validation_error
 
             except PasswordHistory.DoesNotExist:
                 pass
