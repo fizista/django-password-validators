@@ -55,8 +55,8 @@ In the file settings.py we add ::
    ]
    
    # 'lookup_range' sets how many previously used passwords to consider. 
-   # defaults to 3 if not set.
-   # It's a good practice to delete the password history.
+   # defaults to infinity if not set.
+   # Stored passwords outside the 'lookup_range' get deleted.
    # If you want, you can change the default hasher for the password history.
    # DPV_DEFAULT_HISTORY_HASHER = 'django_password_validators.password_history.hashers.HistoryHasher'
 

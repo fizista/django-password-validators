@@ -17,8 +17,8 @@ class UniquePasswordsValidator(object):
     The password is only checked for an existing user.
     """
 
-    def __init__(self, lookup_range=3):
-        self.lookup_range = lookup_range if lookup_range >= 0 else float('inf') 
+    def __init__(self, lookup_range=float('inf')):
+        self.lookup_range = lookup_range if lookup_range >= 0 else float('inf')
 
     def _user_ok(self, user):
         if not user:
@@ -48,25 +48,31 @@ class UniquePasswordsValidator(object):
 
         for user_config in UserPasswordHistoryConfig.objects.filter(user=user):
             password_hash = user_config.make_password_hash(password)
-            lookup_range = min(self.lookup_range, 
-                PasswordHistory.objects.filter(user_config=user_config).count())
+
             try:
-                if lookup_range == 0:
+                if self.lookup_range == 0:
                     raise PasswordHistory.DoesNotExist
-                else:
-                    password_history = PasswordHistory.objects.filter(
-                        user_config=user_config)[:lookup_range - 1] 
-                    
-                    repeated_password =  PasswordHistory.objects.get(
+
+                current_user_passwords = PasswordHistory.objects.filter(
+                    user_config=user_config).order_by('-date')
+
+                if self.lookup_range >= len(current_user_passwords):
+                    PasswordHistory.objects.get(
                         user_config=user_config,
                         password=password_hash
                     )
+                else:
+                    # At this point, there are passwords we have to delete
+                    for entry in current_user_passwords[self.lookup_range:]:
+                        entry.delete()
 
-                    if repeated_password in password_history:
+                    if any(entry.user_config == user_config and
+                           entry.password == password
+                           for entry in current_user_passwords[:self.lookup_range]):
                         raise ValidationError(
                             _("You cannot use a password that was recently used in this application."),
-                            code='password_used'
-                        )
+                            code='password_used')
+
             except PasswordHistory.DoesNotExist:
                 pass
 
