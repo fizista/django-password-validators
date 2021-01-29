@@ -13,20 +13,27 @@ from django_password_validators.password_history.models import (
 class UniquePasswordsValidator(object):
     """
     Validate whether the password was once used by the user
-    in a determined range.
+    in the configured lookup_range.
     The password is only checked for an existing user.
     """
 
     def __init__(self, lookup_range=float('inf')):
         try:
-            self.lookup_range = lookup_range if lookup_range >= 0 else float(
-                'inf')
+            self.lookup_range = (
+                lookup_range if lookup_range >= 0 else float('inf')
+            )
         except BaseException:
             raise TypeError(
-                'UniquePasswordsValidator Error: lookup_range is not a positive integer')
+                'UniquePasswordsValidator Error: lookup_range is not a '
+                'positive integer'
+            )
         self.validation_error = ValidationError(
-            _("You cannot use a password that was recently used in this application."),
-            code='password_used')
+            _(
+                "You cannot use a password that was recently used in "
+                "this application."
+            ),
+            code='password_used'
+        )
 
     def _user_ok(self, user):
         if not user:
@@ -53,18 +60,19 @@ class UniquePasswordsValidator(object):
 
         if not self._user_ok(user):
             return
-
         for user_config in UserPasswordHistoryConfig.objects.filter(user=user):
             password_hash = user_config.make_password_hash(password)
-
             try:
                 if self.lookup_range == 0:
                     raise PasswordHistory.DoesNotExist
 
                 current_user_passwords = PasswordHistory.objects.filter(
-                    user_config=user_config).order_by('date')
+                    user_config=user_config
+                ).order_by('date')
 
-                if self.lookup_range >= len(current_user_passwords):
+                num_user_passwords = len(current_user_passwords)
+
+                if self.lookup_range >= num_user_passwords:
                     PasswordHistory.objects.get(
                         user_config=user_config,
                         password=password_hash
@@ -73,13 +81,18 @@ class UniquePasswordsValidator(object):
 
                 else:
                     # At this point, there are passwords we have to delete
-                    for entry in current_user_passwords[:len(
-                            current_user_passwords) - self.lookup_range]:
+                    for entry in current_user_passwords[
+                        :len(current_user_passwords) - self.lookup_range
+                    ]:
                         entry.delete()
 
-                    if any([entry.user_config == user_config and
-                            entry.password == password
-                            for entry in current_user_passwords[len(current_user_passwords) - self.lookup_range:]]):
+                    if any(
+                        entry.user_config == user_config and
+                        entry.password == password_hash
+                        for entry in current_user_passwords[
+                            num_user_passwords - self.lookup_range:
+                        ]
+                    ):
                         raise self.validation_error
 
             except PasswordHistory.DoesNotExist:
@@ -103,7 +116,7 @@ class UniquePasswordsValidator(object):
         password_hash = user_config.make_password_hash(password)
 
         # We are looking for a hashed password
-        # in the last "lookup_range" entries.
+        # in the last "lookup_range" entries in the database.
         try:
             PasswordHistory.objects.get(
                 user_config=user_config,

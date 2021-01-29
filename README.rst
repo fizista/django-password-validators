@@ -48,13 +48,13 @@ In the file settings.py we add ::
        {
            'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
            'OPTIONS': {
-               'lookup_range': 3 
+               'lookup_range': 3
            }
        },
        ...
    ]
-   
-   # 'lookup_range' sets how many previously used passwords to consider. 
+
+   # 'lookup_range' sets how many previously used passwords to consider.
    # defaults to infinity if not set.
    # Stored passwords outside the 'lookup_range' get deleted.
    # If you want, you can change the default hasher for the password history.
