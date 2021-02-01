@@ -80,17 +80,11 @@ class UniquePasswordsValidator(object):
                     raise self.validation_error
 
                 else:
-                    # At this point, there are passwords we have to delete
-                    for entry in current_user_passwords[
-                        :len(current_user_passwords) - self.lookup_range
-                    ]:
-                        entry.delete()
-
                     if any(
                         entry.user_config == user_config and
                         entry.password == password_hash
                         for entry in current_user_passwords[
-                            num_user_passwords - self.lookup_range:
+                            (num_user_passwords - self.lookup_range):
                         ]
                     ):
                         raise self.validation_error
@@ -98,11 +92,26 @@ class UniquePasswordsValidator(object):
             except PasswordHistory.DoesNotExist:
                 pass
 
-    def password_changed(self, password, user=None):
+    def delete_old_passwords(self, user_config):
+        """
+        Deletes stored PasswordHistory objects outside the
+        defined lookup_range
+        """
 
+        current_user_passwords = PasswordHistory.objects.filter(
+            user_config=user_config
+        ).order_by('date')
+
+        num_user_passwords = len(current_user_passwords)
+        if self.lookup_range < num_user_passwords:
+            for entry in current_user_passwords[
+                :num_user_passwords - self.lookup_range
+            ]:
+                entry.delete()
+
+    def password_changed(self, password, user=None):
         if not self._user_ok(user):
             return
-
         user_config = UserPasswordHistoryConfig.objects.filter(
             user=user,
             iterations=get_password_hasher().iterations
@@ -127,6 +136,8 @@ class UniquePasswordsValidator(object):
             ols_password.user_config = user_config
             ols_password.password = password_hash
             ols_password.save()
+
+        self.delete_old_passwords(user_config=user_config)
 
     def get_help_text(self):
         return _('Your new password can not be identical to any of the '

@@ -217,7 +217,9 @@ class UniquePasswordsValidatorTestCase(PasswordsTestCase):
         self.user_change_password(user_number=1, password_number=2)
         self.assertEqual(PasswordHistory.objects.count(), 2)
         self.user_change_password(user_number=1, password_number=3)
+        self.assert_password_validation_False(user_number=1, password_number=2)
         self.assert_password_validation_False(user_number=1, password_number=3)
+        self.assert_password_validation_True(user_number=1, password_number=1)
         self.assertEqual(PasswordHistory.objects.count(), 2)
 
     @override_settings(AUTH_PASSWORD_VALIDATORS=[{
