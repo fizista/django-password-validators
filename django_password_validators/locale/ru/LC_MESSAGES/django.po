@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-30 19:01+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: django_password_validators/password_character_requirements/password_validation.py:31
+#, python-format
+msgid "This password must contain at least %(min_length)d digit."
+msgid_plural "This password must contain at least %(min_length)d digits."
+msgstr[0] ""
+msgstr[1] ""
+
+#: django_password_validators/password_character_requirements/password_validation.py:41
+#, python-format
+msgid "This password must contain at least %(min_length)d letter."
+msgid_plural "This password must contain at least %(min_length)d letters."
+msgstr[0] "Этот пароль должен содержать по крайней мере %(min_length)d букву."
+msgstr[1] "Этот пароль должен содержать по крайней мере %(min_length)d букв."
+
+#: django_password_validators/password_character_requirements/password_validation.py:51
+#, python-format
+msgid "This password must contain at least %(min_length)d upper case letter."
+msgid_plural ""
+"This password must contain at least %(min_length)d upper case letters."
+msgstr[0] "Этот пароль должен содержать не менее %(min_length)d заглавной буквы."
+msgstr[1] "Этот пароль должен содержать не менее %(min_length)d заглавных букв."
+
+#: django_password_validators/password_character_requirements/password_validation.py:61
+#, python-format
+msgid "This password must contain at least %(min_length)d lower case letter."
+msgid_plural ""
+"This password must contain at least %(min_length)d lower case letters."
+msgstr[0] "Этот пароль должен содержать не менее %(min_length)d строчной буквы."
+msgstr[1] "Этот пароль должен содержать не менее %(min_length)d строчных букв."
+
+#: django_password_validators/password_character_requirements/password_validation.py:71
+#, python-format
+msgid "This password must contain at least %(min_length)d special character."
+msgid_plural ""
+"This password must contain at least %(min_length)d special characters."
+msgstr[0] "Этот пароль должен содержать по крайней мере %(min_length)d специальный символ."
+msgstr[1] "Этот пароль должен содержать по крайней мере %(min_length)d специальных символа."
+
+#: django_password_validators/password_character_requirements/password_validation.py:86
+#, python-format
+msgid "%(min_length)s letter"
+msgid_plural "%(min_length)s letters"
+msgstr[0] "%(min_length)s буква"
+msgstr[1] "%(min_length)s буквы"
+
+#: django_password_validators/password_character_requirements/password_validation.py:94
+#, python-format
+msgid "%(min_length)s digit"
+msgid_plural "%(min_length)s digits"
+msgstr[0] "%(min_length)s цифра"
+msgstr[1] "%(min_length)s цифры"
+
+#: django_password_validators/password_character_requirements/password_validation.py:102
+#, python-format
+msgid "%(min_length)s lower case letter"
+msgid_plural "%(min_length)s lower case letters"
+msgstr[0] "%(min_length)s строчная буква"
+msgstr[1] "%(min_length)s строчные буквы"
+
+#: django_password_validators/password_character_requirements/password_validation.py:110
+#, python-format
+msgid "%(min_length)s upper case letter"
+msgid_plural "%(min_length)s upper case letters"
+msgstr[0] "%(min_length)s заглавная буква"
+msgstr[1] "%(min_length)s заглавнык буквы"
+
+#: django_password_validators/password_character_requirements/password_validation.py:118
+#, python-format
+msgid ""
+"%(min_length_special)s special character, such as %(special_characters)s"
+msgid_plural ""
+"%(min_length_special)s special characters, such as %(special_characters)s"
+msgstr[0] "%(min_length_special)s специальный символ, такой как %(special_characters)s"
+msgstr[1] "%(min_length_special)s специальных симва, такой как %(special_characters)s"
+
+#: django_password_validators/password_character_requirements/password_validation.py:123
+msgid "This password must contain at least"
+msgstr "Этот пароль должен содержать по крайней мере"
+
+#: django_password_validators/password_history/models.py:20
+msgid "When created salt"
+msgstr "При создании соли"
+
+#: django_password_validators/password_history/models.py:25
+msgid "Salt for the user"
+msgstr "Соль для пользователя"
+
+#: django_password_validators/password_history/models.py:30
+msgid "The number of iterations for hasher"
+msgstr "Количество итераций для хэширования"
+
+#: django_password_validators/password_history/models.py:38
+msgid "Configuration"
+msgstr "Конфигурация"
+
+#: django_password_validators/password_history/models.py:39
+msgid "Configurations"
+msgstr "Конфигурации"
+
+#: django_password_validators/password_history/models.py:78
+msgid "Password hash"
+msgstr "Хэш пароля"
+
+#: django_password_validators/password_history/models.py:83
+msgid "Date"
+msgstr "Дата"
+
+#: django_password_validators/password_history/password_validation.py:81
+msgid "You can not use a password that is already used in this application."
+msgstr "Вы не можете использовать пароль, который уже используется в этом приложении."
+
+#: django_password_validators/password_history/password_validation.py:122
+#, python-format
+msgid ""
+"Your new password can not be identical to any of the %(old_pass)d previously "
+"entered passwords."
+msgid_plural ""
+"Your new password can not be identical to any of the %(old_pass)d previously "
+"entered passwords."
+msgstr[0] "Ваш новый пароль не может быть идентичен ни одному из %(old_pass)d ранее введенных паролей."
+msgstr[1] "Ваш новый пароль не может быть идентичен ни одному из %(old_pass)d ранее введенных паролей."
+
+#: django_password_validators/password_history/password_validation.py:128
+msgid ""
+"Your new password can not be identical to any of the previously entered."
+msgstr "Ваш новый пароль не может быть идентичен ни одному из ранее введенных."
