@@ -85,7 +85,7 @@ msgstr[0] "%(min_length)s 个特殊符号，例如：%(special_characters)s 。"
 
 #: password_character_requirements/password_validation.py:123
 msgid "This password must contain at least"
-msgstr "你的密码包含至少 "
+msgstr "你的密码包含至少"
 
 #: password_history/models.py:20
 msgid "When created salt"
@@ -117,7 +117,7 @@ msgstr "日期"
 
 #: password_history/password_validation.py:81
 msgid "You can not use a password that is already used in this application."
-msgstr "你不能重复使用这个密码"
+msgstr "你不能重复使用这个密码。"
 
 #: password_history/password_validation.py:122
 #, fuzzy, python-format
@@ -134,4 +134,4 @@ msgstr[0] "你的新密码不能与之前输入的 %(old_pass)d 个密码相同�
 #: password_history/password_validation.py:128
 msgid ""
 "Your new password can not be identical to any of the previously entered."
-msgstr "你的新密码应该和以前使用过的密码不同"
+msgstr "你的新密码应该和以前使用过的密码不同。"
