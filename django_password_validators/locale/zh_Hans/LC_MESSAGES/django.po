@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-16 10:08+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-06-15 14:00+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -22,58 +22,58 @@ msgstr ""
 #, python-format
 msgid "This password must contain at least %(min_length)d digit."
 msgid_plural "This password must contain at least %(min_length)d digits."
-msgstr[0] ""
+msgstr[0] "你的密码必须包含至少 %(min_length)d 个数字。"
 
 #: password_character_requirements/password_validation.py:41
 #, python-format
 msgid "This password must contain at least %(min_length)d letter."
 msgid_plural "This password must contain at least %(min_length)d letters."
-msgstr[0] ""
+msgstr[0] "你的密码必须包含至少 %(min_length)d 个字母。"
 
 #: password_character_requirements/password_validation.py:51
 #, python-format
 msgid "This password must contain at least %(min_length)d upper case letter."
 msgid_plural ""
 "This password must contain at least %(min_length)d upper case letters."
-msgstr[0] ""
+msgstr[0] "你的密码必须包含至少 %(min_length)d 个大写字母。"
 
 #: password_character_requirements/password_validation.py:61
 #, python-format
 msgid "This password must contain at least %(min_length)d lower case letter."
 msgid_plural ""
 "This password must contain at least %(min_length)d lower case letters."
-msgstr[0] ""
+msgstr[0] "你的密码必须包含至少 %(min_length)d 个小写字母。"
 
 #: password_character_requirements/password_validation.py:71
 #, python-format
 msgid "This password must contain at least %(min_length)d special character."
 msgid_plural ""
 "This password must contain at least %(min_length)d special characters."
-msgstr[0] ""
+msgstr[0] "你的密码必须包含至少 %(min_length)d 个特殊符号。"
 
 #: password_character_requirements/password_validation.py:86
 #, python-format
 msgid "%(min_length)s letter"
 msgid_plural "%(min_length)s letters"
-msgstr[0] ""
+msgstr[0] "%(min_length)s 个字母"
 
 #: password_character_requirements/password_validation.py:94
 #, python-format
 msgid "%(min_length)s digit"
 msgid_plural "%(min_length)s digits"
-msgstr[0] ""
+msgstr[0] "%(min_length)s 个数字"
 
 #: password_character_requirements/password_validation.py:102
 #, python-format
 msgid "%(min_length)s lower case letter"
 msgid_plural "%(min_length)s lower case letters"
-msgstr[0] ""
+msgstr[0] "%(min_length)s 个小写字母"
 
 #: password_character_requirements/password_validation.py:110
 #, python-format
 msgid "%(min_length)s upper case letter"
 msgid_plural "%(min_length)s upper case letters"
-msgstr[0] ""
+msgstr[0] "%(min_length)s 个大写字母"
 
 #: password_character_requirements/password_validation.py:118
 #, python-format
@@ -81,11 +81,11 @@ msgid ""
 "%(min_length_special)s special character, such as %(special_characters)s"
 msgid_plural ""
 "%(min_length_special)s special characters, such as %(special_characters)s"
-msgstr[0] ""
+msgstr[0] "%(min_length)s 个特殊符号，例如：%(special_characters)s 。"
 
 #: password_character_requirements/password_validation.py:123
 msgid "This password must contain at least"
-msgstr ""
+msgstr "你的密码包含至少 "
 
 #: password_history/models.py:20
 msgid "When created salt"
@@ -117,7 +117,7 @@ msgstr "日期"
 
 #: password_history/password_validation.py:81
 msgid "You can not use a password that is already used in this application."
-msgstr "您不能重复使用这个密码"
+msgstr "你不能重复使用这个密码"
 
 #: password_history/password_validation.py:122
 #, fuzzy, python-format
@@ -129,9 +129,9 @@ msgid ""
 msgid_plural ""
 "Your new password can not be identical to any of the %(old_pass)d previously "
 "entered passwords."
-msgstr[0] "您的新密码不能与之前输入的%(old_pass)d个密码相同。"
+msgstr[0] "你的新密码不能与之前输入的 %(old_pass)d 个密码相同。"
 
 #: password_history/password_validation.py:128
 msgid ""
 "Your new password can not be identical to any of the previously entered."
-msgstr "您的新密码应该和以前使用过的密码不同"
+msgstr "你的新密码应该和以前使用过的密码不同"
