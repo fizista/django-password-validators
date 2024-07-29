@@ -1,34 +1,9 @@
 import os
 from os.path import dirname, realpath
-import sys
 
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
 
 from django_password_validators import __version__ as VERSION
-
-
-class Tox(TestCommand):
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.tox_args = None
-
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
-
-    def run_tests(self):
-        # import here, cause outside the eggs aren't loaded
-        import tox
-        import shlex
-        args = self.tox_args
-        if args:
-            args = shlex.split(self.tox_args)
-        errno = tox.cmdline(args=args)
-        sys.exit(errno)
-
 
 __dir__ = realpath(dirname(__file__))
 
@@ -69,9 +44,7 @@ setup(
     install_requires=[
         'django >= 3.0',
     ],
-    tests_require=TESTS_REQUIRE,
     extras_require={
         'test': TESTS_REQUIRE,
     },
-    cmdclass={'test': Tox},
 )
